@@ -1,0 +1,23 @@
+# Statistical Arbitrage / Pairs Trading System
+# Python dependencies
+#
+# Install:  pip install -r requirements.txt
+# Minimal:  only yfinance + matplotlib needed for full functionality
+# Core logic (ou_model, regime_hmm, tearsheet, pair_scanner, visualise)
+# works with zero dependencies using pure-Python fallbacks.
+
+# ── Data fetching ─────────────────────────────────────────────────────────────
+yfinance>=0.2.28          # NSE/BSE price download via Yahoo Finance
+
+# ── Numerics (used in ou_model.py MLE optimisation) ──────────────────────────
+numpy>=1.24.0
+scipy>=1.11.0             # optimize.minimize for MLE, stats.linregress
+
+# ── Visualisation ─────────────────────────────────────────────────────────────
+matplotlib>=3.7.0         # 4-panel dashboard in visualise.py
+
+# ── HMM (optional — regime_hmm.py has pure-Python fallback) ──────────────────
+# hmmlearn>=0.3.0         # faster HMM; uncomment if available
+
+# ── Data handling ─────────────────────────────────────────────────────────────
+pandas>=2.0.0             # optional — used only if you extend the pipeline
