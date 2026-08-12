@@ -26,7 +26,7 @@
 
 Statistical arbitrage exploits temporary price divergences between cointegrated
 asset pairs. When two stocks move together in the long run (cointegrated), their
-spread — a linear combination of their prices — is stationary and mean-reverting.
+spread - a linear combination of their prices - is stationary and mean-reverting.
 We trade the spread: buy it when it is unusually low, sell it when unusually high,
 profit when it reverts to its mean.
 
@@ -46,11 +46,11 @@ profit when it reverts to its mean.
 > filter, signals, sizing, risk gates, walk-forward backtest) is the
 > pipeline that actually executes and produces `trades.csv`/`equity.csv`.
 > `ou_model.py` and `regime_hmm.py` are standalone, fully-working Python
-> analytics modules — they are not called from inside the C++ backtest
+> analytics modules - they are not called from inside the C++ backtest
 > loop (no code path feeds an HMM regime series or an MLE half-life back
 > into `RiskManager`/`WalkForwardEngine`). Run them yourself against a
 > spread series for offline analysis, or wire `RegimeFilter.predict()`
-> into the entry check yourself if you want live regime-gating — see
+> into the entry check yourself if you want live regime-gating - see
 > [§11 Extension Ideas](#11-extension-ideas).
 
 ### Language split rationale
@@ -120,8 +120,8 @@ Two price series P_A and P_B are **cointegrated** if there exists β such that:
 spread_t = P_A(t) - β·P_B(t) - α   is stationary (I(0))
 ```
 
-**Step 1** — OLS regression: `P_A = α + β·P_B + ε`  
-**Step 2** — ADF test on residuals ε to check stationarity
+**Step 1** - OLS regression: `P_A = α + β·P_B + ε`  
+**Step 2** - ADF test on residuals ε to check stationarity
 
 The **Augmented Dickey-Fuller test** checks the null hypothesis H₀: unit root exists.  
 Regression: `Δy_t = α + ρ·y_{t-1} + γ₁Δy_{t-1} + ... + γₚΔy_{t-p} + ε`  
@@ -137,7 +137,7 @@ Critical values (no trend, constant):
 We also require **Hurst exponent H < 0.5** (independently confirms mean reversion)
 and **half-life between 5 and 120 bars** (practical trading constraint).
 
-### 3.2 Kalman Filter — Dynamic Hedge Ratio
+### 3.2 Kalman Filter - Dynamic Hedge Ratio
 
 Static OLS β drifts as the economic relationship between two stocks evolves.
 The Kalman filter treats β as a latent state that evolves as a random walk:
@@ -186,7 +186,7 @@ Discretised:
 b     = e^{-θΔt} - 1  ≈  -θ  (for small θ)
 θ     = -b
 half_life = ln(2)/θ
-σ_eq  = σ / √(2θ)     (equilibrium std dev — used to set z-score bands)
+σ_eq  = σ / √(2θ)     (equilibrium std dev - used to set z-score bands)
 ```
 
 ### 3.4 Signal Generation
@@ -209,7 +209,7 @@ where p  = win rate (from recent trade history)
       W  = average win P&L
       L  = average loss P&L (absolute)
 
-Fractional Kelly: f = 0.25 · f*   (standard practice — full Kelly overbets)
+Fractional Kelly: f = 0.25 · f*   (standard practice - full Kelly overbets)
 
 Z-score scaling: notional = base_notional × min(|z| / entryZ, 2.0)
 ```
@@ -241,22 +241,22 @@ A large gap (IS Sharpe >> OOS Sharpe) signals overfitting.
 sudo apt-get install cmake g++ build-essential   # Ubuntu/Debian
 brew install cmake                                # macOS
 
-# Python dependencies (all optional — pure-Python fallbacks exist)
+# Python dependencies (all optional - pure-Python fallbacks exist)
 pip install -r requirements.txt
 ```
 
-### Step 1 — Generate sample data (or download real NSE data)
+### Step 1 - Generate sample data (or download real NSE data)
 
 ```bash
 # Option A: synthetic cointegrated pairs (no internet needed)
 python python/data_fetch.py --synthetic 600
-# Already included in data/prices/ — HDFC, ICICI, TCS, INFY, WIPRO, HCLTECH
+# Already included in data/prices/ - HDFC, ICICI, TCS, INFY, WIPRO, HCLTECH
 
 # Option B: real NSE data via yfinance
 python python/data_fetch.py --tickers HDFCBANK.NS ICICIBANK.NS TCS.NS INFY.NS
 ```
 
-### Step 2 — Build the C++ system
+### Step 2 - Build the C++ system
 
 ```bash
 cd cpp
@@ -264,7 +264,7 @@ cmake -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j4
 ```
 
-### Step 3 — Run modes
+### Step 3 - Run modes
 
 ```bash
 # Walk-forward backtest on all 6 tickers
@@ -283,7 +283,7 @@ cmake --build build -j4
     --tickers HDFC,ICICI,TCS,INFY,WIPRO,HCLTECH
 ```
 
-### Step 4 — Unit tests
+### Step 4 - Unit tests
 
 ```bash
 cd cpp
@@ -291,7 +291,7 @@ cd cpp
 # Expected: 28 tests, all passing
 ```
 
-### Step 5 — Python analytics
+### Step 5 - Python analytics
 
 ```bash
 cd python
@@ -323,8 +323,8 @@ python regime_hmm.py
 | `--mode` | `wf` | `wf` / `pair` / `screen` / `generate` |
 | `--data` | `data/prices` | Price CSV directory |
 | `--out` | `data/results` | Output directory |
-| `--tickers` | — | Comma-separated ticker list |
-| `--tickerA/B` | — | Pair for `--mode pair` |
+| `--tickers` | - | Comma-separated ticker list |
+| `--tickerA/B` | - | Pair for `--mode pair` |
 | `--train` | `252` | Training window (bars) |
 | `--test` | `63` | Test window (bars) |
 | `--nav` | `1000000` | Initial portfolio NAV |
@@ -370,7 +370,7 @@ python regime_hmm.py
 
 ## 6. Data Structures
 
-### RankMatrix equivalent — O(1) spread lookup
+### RankMatrix equivalent - O(1) spread lookup
 
 ```cpp
 // Precomputed Kalman β and α avoid recomputing spread from scratch each bar
@@ -393,7 +393,7 @@ struct KalmanState {
 Using flat storage instead of a matrix library:
 - No external dependency
 - Cache-friendly (4 doubles = 32 bytes, fits in one cache line)
-- Fast for 2×2 — no general matrix multiply needed
+- Fast for 2×2 - no general matrix multiply needed
 
 ### Trade record
 
@@ -455,7 +455,7 @@ Profit factor > 1.3
 | Stability check (ADF) | O(n) | O(1) | Verify spread is I(0) |
 
 **Total walk-forward complexity:** O(W × N² × n)  
-For W=8 windows, N=6 tickers, n=600 bars: ~8 × 15 × 600 = **72,000 operations** — runs in milliseconds.
+For W=8 windows, N=6 tickers, n=600 bars: ~8 × 15 × 600 = **72,000 operations** - runs in milliseconds.
 
 ---
 
@@ -463,9 +463,9 @@ For W=8 windows, N=6 tickers, n=600 bars: ~8 × 15 × 600 = **72,000 operations*
 
 This is actual output from `./build/statarb --mode wf --tickers HDFC,ICICI,TCS,INFY,WIPRO,HCLTECH`
 on the 600-bar synthetic data included in `data/prices/` (not hand-written/illustrative
-numbers). The dataset is small — 600 bars only supports 5 walk-forward windows of
+numbers). The dataset is small - 600 bars only supports 5 walk-forward windows of
 252 train + 63 test bars, and most windows find no pair that clears the cointegration
-filter — so trade counts are low. Generate more synthetic bars
+filter - so trade counts are low. Generate more synthetic bars
 (`--mode generate --generate 2000`) or feed real downloaded price history for a
 denser sample.
 
@@ -489,11 +489,11 @@ Combined Tearsheet:
   ⑧ 95% VaR       : -1,038.95
 ```
 
-The `inf` values above are not a display bug — Sortino/Calmar/profit-factor are
+The `inf` values above are not a display bug - Sortino/Calmar/profit-factor are
 genuinely undefined (division by a downside/drawdown/loss total of zero) when a
 sample has no losing trades at all, and the tearsheet reports that honestly
 rather than substituting an arbitrary large number. Do not read 2 trades /
-100% win rate as a validated edge — it is what a 600-bar demo dataset produces,
+100% win rate as a validated edge - it is what a 600-bar demo dataset produces,
 nothing more.
 
 **Overfitting check:**
@@ -517,7 +517,7 @@ estimator, which is unbiased for Gaussian noise.
 
 **Q: Why not just use a rolling OLS hedge ratio instead of Kalman?**  
 A: Rolling OLS weights all observations in the window equally and has a hard
-cutoff — data from 31 days ago and 1 day ago count the same if the window is 30.
+cutoff - data from 31 days ago and 1 day ago count the same if the window is 30.
 Kalman exponentially weights recent observations (controlled by δ) and has no
 hard cutoff. More importantly, Kalman provides a full uncertainty estimate (P matrix)
 which rolling OLS does not. In practice, Kalman β tracks regime shifts faster.
@@ -525,7 +525,7 @@ which rolling OLS does not. In practice, Kalman β tracks regime shifts faster.
 **Q: What is look-ahead bias and how does walk-forward prevent it?**  
 A: Look-ahead bias occurs when future data influences past signals. In a naive
 backtest, you fit the hedge ratio β using the full dataset, then test signals on
-the same dataset — the β already "knows" future prices. Walk-forward prevents this
+the same dataset - the β already "knows" future prices. Walk-forward prevents this
 by fitting β only on a training window that ends strictly before the test window.
 Each test window sees only a model fitted on its own past.
 
@@ -549,7 +549,7 @@ We use fractional Kelly (25% of full Kelly) in practice because full Kelly
 has very high variance and one bad trade can wipe out a large fraction of capital.
 
 **Q: How does the HMM regime filter help in crises like 2008?**  
-A: In 2008, cointegrated pairs broke down — the economic relationship between
+A: In 2008, cointegrated pairs broke down - the economic relationship between
 stocks changed fundamentally. The HMM detects this as a regime shift from
 low-volatility (mean-reverting, state 0) to high-volatility (trending, state 1)
 by monitoring the normalised spread volatility. Once in state 1, we block new
@@ -562,7 +562,7 @@ new positions in September 2008 when correlations spiked.
 
 | Extension | Difficulty | Impact |
 |---|---|---|
-| Johansen cointegration test (supports N>2 assets) | Hard | High — portfolio of 3+ stocks |
+| Johansen cointegration test (supports N>2 assets) | Hard | High - portfolio of 3+ stocks |
 | Kalman smoother (RTS smoother) for β estimation | Medium | Better in-sample β estimate |
 | Pairs-level VaR with copula (Gaussian vs t-copula) | Hard | More accurate tail risk |
 | Online learning: update OU params every 30 bars | Easy | More adaptive signals |
@@ -575,35 +575,35 @@ new positions in September 2008 when correlations spiked.
 
 ## 12. References
 
-1. **Gale & Shapley (1962)** — "College Admissions and the Stability of Marriage"  
-   *American Mathematical Monthly* — original stable matching proof
+1. **Gale & Shapley (1962)** - "College Admissions and the Stability of Marriage"  
+   *American Mathematical Monthly* - original stable matching proof
 
-2. **Engle & Granger (1987)** — "Cointegration and Error Correction: Representation, Estimation, and Testing"  
-   *Econometrica* — foundation of the cointegration test used here
+2. **Engle & Granger (1987)** - "Cointegration and Error Correction: Representation, Estimation, and Testing"  
+   *Econometrica* - foundation of the cointegration test used here
 
-3. **Kalman (1960)** — "A New Approach to Linear Filtering and Prediction Problems"  
-   *Journal of Basic Engineering* — original Kalman filter paper
+3. **Kalman (1960)** - "A New Approach to Linear Filtering and Prediction Problems"  
+   *Journal of Basic Engineering* - original Kalman filter paper
 
-4. **Avellaneda & Lee (2010)** — "Statistical Arbitrage in the US Equities Market"  
-   *Quantitative Finance* — industry-standard stat-arb with Kalman hedge ratio
+4. **Avellaneda & Lee (2010)** - "Statistical Arbitrage in the US Equities Market"  
+   *Quantitative Finance* - industry-standard stat-arb with Kalman hedge ratio
 
-5. **Kelly (1956)** — "A New Interpretation of Information Rate"  
-   *Bell System Technical Journal* — Kelly criterion derivation
+5. **Kelly (1956)** - "A New Interpretation of Information Rate"  
+   *Bell System Technical Journal* - Kelly criterion derivation
 
-6. **MacKinnon (1994, 2010)** — "Approximate Asymptotic Distribution Functions for Unit-Root and Cointegration Tests"  
-   *Journal of Business & Economic Statistics* — ADF critical value tables
+6. **MacKinnon (1994, 2010)** - "Approximate Asymptotic Distribution Functions for Unit-Root and Cointegration Tests"  
+   *Journal of Business & Economic Statistics* - ADF critical value tables
 
-7. **Roth & Peranson (1999)** — "The Redesign of the Matching Market for American Physicians"  
-   *American Economic Review* — NRMP algorithm (extends your HRM project)
+7. **Roth & Peranson (1999)** - "The Redesign of the Matching Market for American Physicians"  
+   *American Economic Review* - NRMP algorithm (extends your HRM project)
 
-8. **Hamilton (1989)** — "A New Approach to the Economic Analysis of Nonstationary Time Series"  
-   *Econometrica* — Markov regime-switching model (basis for HMM filter)
+8. **Hamilton (1989)** - "A New Approach to the Economic Analysis of Nonstationary Time Series"  
+   *Econometrica* - Markov regime-switching model (basis for HMM filter)
 
 ---
 
 ## License
 
-MIT License — free to use, modify, and distribute with attribution.
+MIT License - free to use, modify, and distribute with attribution.
 
 ---
 

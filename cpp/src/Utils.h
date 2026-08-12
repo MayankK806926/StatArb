@@ -66,7 +66,7 @@ struct Trade {
 };
 
 // Repeat a (possibly multi-byte UTF-8) string n times. Box-drawing glyphs
-// like "─"/"═"/"█"/"░" are 3-byte UTF-8 sequences — std::string(n, '─')
+// like "─"/"═"/"█"/"░" are 3-byte UTF-8 sequences - std::string(n, '─')
 // truncates them to a single (wrong) byte, so use this instead.
 inline std::string repeatStr(const std::string& s, int n) {
     std::string out;

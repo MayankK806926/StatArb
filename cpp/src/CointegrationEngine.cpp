@@ -10,7 +10,7 @@
 double CointegrationEngine::mackinnon_pvalue(double stat, int /*n*/) {
     // Piecewise-linear interpolation between known MacKinnon (1994/2010)
     // critical-value/p-value anchor points for the no-trend, constant-only
-    // case. This is NOT the full MacKinnon response-surface polynomial —
+    // case. This is NOT the full MacKinnon response-surface polynomial -
     // it is an approximation good enough for pair screening/ranking, not
     // for publication-grade inference.
     // Anchors: t=-5.0→p=0.0001, t=-4.0→p=0.001, t=-3.45→p=0.01,

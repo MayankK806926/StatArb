@@ -1,5 +1,5 @@
 """
-tearsheet.py — Full Performance Tearsheet
+tearsheet.py - Full Performance Tearsheet
 ==========================================
 Computes and prints/exports all 8 performance metrics:
   ① Annualised return
@@ -221,7 +221,7 @@ class Tearsheet:
             m.profit_factor = sum_win / sum_loss
         else:
             # no losses at all: infinite profit factor if there were wins,
-            # otherwise undefined (no trades / no wins either) — not 0.0,
+            # otherwise undefined (no trades / no wins either) - not 0.0,
             # which would misleadingly read as a bad strategy
             m.profit_factor = math.inf if sum_win > 1e-6 else 0.0
 
@@ -396,7 +396,7 @@ class Tearsheet:
 # ── Compare in-sample vs OOS tearsheets ──────────────────────────────────────
 def compare_is_oos(is_metrics: TearsheetMetrics,
                     oos_metrics: TearsheetMetrics):
-    """Print IS vs OOS comparison — key overfitting check."""
+    """Print IS vs OOS comparison - key overfitting check."""
     print("\n╔══════════════════════════════════════════════════════╗")
     print("║     IN-SAMPLE vs OUT-OF-SAMPLE COMPARISON           ║")
     print("║     (large gap = overfitting)                        ║")
@@ -412,7 +412,7 @@ def compare_is_oos(is_metrics: TearsheetMetrics,
     # higher_is_better=True metrics degrade when OOS falls well below IS;
     # Max DD is the opposite (higher drawdown is worse), so it degrades
     # when OOS rises well above IS. The original code only ever flagged
-    # the Sharpe row — every other metric's degradation went unflagged
+    # the Sharpe row - every other metric's degradation went unflagged
     # even though the table displays all of them.
     rows = [
         ("Sharpe",         is_metrics.sharpe,          oos_metrics.sharpe,          True),
@@ -441,7 +441,7 @@ if __name__ == "__main__":
 
     if not os.path.exists(trades_csv):
         # Demo with synthetic trades
-        print("[INFO] No trades CSV found — generating demo data\n")
+        print("[INFO] No trades CSV found - generating demo data\n")
         ts = Tearsheet(initial_nav=1_000_000)
         import random; random.seed(42)
         for i in range(50):

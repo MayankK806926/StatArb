@@ -9,7 +9,7 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
 endif()
 
-# NOTE: intentionally no -march=native — it bakes in the build machine's
+# NOTE: intentionally no -march=native - it bakes in the build machine's
 # CPU features, so a Release binary built on one machine can SIGILL when
 # copied to and run on a different (older/different-vendor) CPU.
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")

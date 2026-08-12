@@ -1,7 +1,7 @@
 // tests/test_all.cpp
 // ──────────────────────────────────────────────────────────────────────────────
 // Self-contained unit test suite for StatArb components.
-// No external framework — lightweight assertion macros only.
+// No external framework - lightweight assertion macros only.
 //
 // Build:  g++ -std=c++17 -O2 test_all.cpp ../src/*.cpp -o test_statarb
 // Run:    ./test_statarb
@@ -274,7 +274,7 @@ void test_signal_exit_at_zero() {
     // then decays smoothly toward 0. A flat plateau before the decay was
     // tried originally but collapses the rolling std to ~0 inside the
     // window, which causes a premature spurious entry+exit before the
-    // decay even starts — so the decay leg is continuous with the jump.
+    // decay even starts - so the decay leg is continuous with the jump.
     std::vector<double> spread(100);
     for (int i = 0; i < 40; ++i) spread[i] = 0.0 + 0.1*(double)((i%5)-2);
     for (int i = 40; i < 100; ++i) spread[i] = 3.0 - (i-40) * 0.08;  // decay toward 0
@@ -297,7 +297,7 @@ void test_signal_stop_at_3p5sigma() {
     std::vector<double> spread(80);
     for (int i = 0; i < 30; ++i) spread[i] = 0.1*(double)(i%3);
     // Enter at bar 30, spread keeps going → stop.
-    // NOTE: a constant-slope ramp does NOT work here — the rolling window
+    // NOTE: a constant-slope ramp does NOT work here - the rolling window
     // adapts its own std to the ramp within a few bars, so a linear (or
     // even accelerating-but-smooth) divergence asymptotes to a fixed
     // z-score well below the stop threshold instead of blowing past it.
@@ -368,7 +368,7 @@ void test_risk_allows_normal() {
     RiskManager rm(cfg);
     // spreadBps must clear the round-trip cost estimate (bid-ask + brokerage
     // + sqrt market-impact on this notional/adv ratio, ~52 bps here) or the
-    // break-even check correctly blocks the trade — 80 bps clears it with room.
+    // break-even check correctly blocks the trade - 80 bps clears it with room.
     auto rc = rm.checkEntry(0.02, 0.01, 80.0, 1, 50'000);
     EXPECT_TRUE(rc.allowed());
 }
@@ -448,7 +448,7 @@ void test_full_pipeline_cointegrated_pair() {
 // ─── main ─────────────────────────────────────────────────────────────────────
 int main() {
     std::cout << "\n╔══════════════════════════════════════════════════════╗\n";
-    std::cout << "║     STATISTICAL ARBITRAGE — UNIT TEST SUITE          ║\n";
+    std::cout << "║     STATISTICAL ARBITRAGE - UNIT TEST SUITE          ║\n";
     std::cout << "║     28 tests across all components                   ║\n";
     std::cout << "╚══════════════════════════════════════════════════════╝\n\n";
 

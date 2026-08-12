@@ -1,5 +1,5 @@
 """
-data_fetch.py — NSE/BSE Price Data Fetcher
+data_fetch.py - NSE/BSE Price Data Fetcher
 ===========================================
 Downloads OHLCV data for NSE stocks using yfinance and saves
 each ticker as a CSV in data/prices/.
@@ -55,7 +55,7 @@ def download_prices(tickers, start="2018-01-01", end=None,
             df = yf.download(ticker, start=start, end=end,
                              auto_adjust=True, progress=False)
             if df.empty:
-                print("EMPTY — skipped")
+                print("EMPTY - skipped")
                 continue
             # Save with consistent column name
             df.index.name = "Date"

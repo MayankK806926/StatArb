@@ -1,5 +1,5 @@
 """
-regime_hmm.py — Hidden Markov Model Regime Filter
+regime_hmm.py - Hidden Markov Model Regime Filter
 ===================================================
 2-state HMM on spread volatility and autocorrelation.
 
@@ -56,7 +56,7 @@ def _sign_changes(v: List[float]) -> int:
     return count
 
 
-# ─── HMM via EM (Baum-Welch) — pure Python ───────────────────────────────────
+# ─── HMM via EM (Baum-Welch) - pure Python ───────────────────────────────────
 @dataclass
 class HMMState:
     """Gaussian emission parameters for one state."""
@@ -346,7 +346,7 @@ class RegimeFilter:
         in_pos   = False
         for i in range(len(filtered)):
             if signals[i] != 0 and not in_pos:
-                # New entry — block if regime is TRENDING
+                # New entry - block if regime is TRENDING
                 if regimes[i] == 1:
                     filtered[i] = 0
                 else:
@@ -401,7 +401,7 @@ if __name__ == "__main__":
     # (sigma/sqrt(2*theta) = 1/sqrt(0.1) ≈ 3.16 for the params below), or
     # the "breakdown" segment is actually LESS locally volatile than the
     # calm regime and the demo demonstrates the opposite of its own claim
-    # (this was the case with the original drift=0.08/sigma=0.5 params —
+    # (this was the case with the original drift=0.08/sigma=0.5 params -
     # they produced a barely-perturbed trend with less rolling variance
     # than the surrounding mean-reverting noise, so the "regime detector"
     # flagged the calm segments as breakdowns and the real breakdown as

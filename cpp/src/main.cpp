@@ -1,4 +1,4 @@
-// ─── StatArb — Statistical Arbitrage / Pairs Trading System ──────────────────
+// ─── StatArb - Statistical Arbitrage / Pairs Trading System ──────────────────
 // Entry point: parses CLI args, loads data, runs cointegration screening,
 // walk-forward backtest, and writes full tearsheet + CSV exports.
 //

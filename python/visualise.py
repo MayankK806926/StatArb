@@ -1,5 +1,5 @@
 """
-visualise.py — Spread Visualisation Dashboard
+visualise.py - Spread Visualisation Dashboard
 ===============================================
 Produces a 4-panel plot:
   Panel 1: Normalised price series of A and B (rebased to 100)
@@ -414,7 +414,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     print("╔══════════════════════════════════════════════════╗")
-    print("║     StatArb — Spread Visualisation Dashboard     ║")
+    print("║     StatArb - Spread Visualisation Dashboard     ║")
     print("╚══════════════════════════════════════════════════╝\n")
 
     # Try loading real data
@@ -426,10 +426,10 @@ if __name__ == "__main__":
     equity  = read_equity_csv(args.equity)
 
     if not pA or not pB:
-        print("[INFO] Price data not found — using synthetic demo prices\n")
+        print("[INFO] Price data not found - using synthetic demo prices\n")
         demo_pA, demo_pB, demo_spread, demo_equity, demo_trades = _make_demo_data(400)
         pA, pB, spread = demo_pA, demo_pB, demo_spread
-        # Only fall back to demo trades/equity if real ones weren't loaded —
+        # Only fall back to demo trades/equity if real ones weren't loaded -
         # missing price CSVs shouldn't discard a real trades.csv/equity.csv
         # that DID load successfully.
         if not trades:
@@ -441,14 +441,14 @@ if __name__ == "__main__":
         n      = min(len(pA), len(pB))
         pA, pB = pA[:n], pB[:n]
         # Use the actual fitted hedge ratio from the trades CSV rather than
-        # a hardcoded guess — the real β varies per pair (the C++ engine's
+        # a hardcoded guess - the real β varies per pair (the C++ engine's
         # Kalman filter tracks it dynamically), so a fixed constant here
         # would show a spread the backtest never actually traded.
         if trades and "hedge_ratio" in trades[0]:
             beta = trades[0]["hedge_ratio"]
         else:
             beta = 1.0
-            print("[WARN] No trades.csv hedge ratio available — using β=1.0 "
+            print("[WARN] No trades.csv hedge ratio available - using β=1.0 "
                   "for the spread plot; pass a real trades.csv for an accurate spread.\n")
         spread = [pA[i] - beta * pB[i] for i in range(n)]
 

@@ -1,5 +1,5 @@
 """
-pair_scanner.py — NIFTY-50 Cointegration Pair Scanner
+pair_scanner.py - NIFTY-50 Cointegration Pair Scanner
 ======================================================
 Scans all C(n,2) pairs from a universe of NSE stocks.
 Can use either:
@@ -34,10 +34,10 @@ NIFTY50_PAIRS_UNIVERSE = [
 
 # Known classic pairs (for validation)
 CLASSIC_PAIRS = [
-    ("HDFC",  "ICICI",    "Banking — large cap"),
-    ("TCS",   "INFY",     "IT services — large cap"),
-    ("WIPRO", "HCLTECH",  "IT services — mid cap"),
-    ("RELIANCE", "ONGC",  "Energy — different profiles"),
+    ("HDFC",  "ICICI",    "Banking - large cap"),
+    ("TCS",   "INFY",     "IT services - large cap"),
+    ("WIPRO", "HCLTECH",  "IT services - mid cap"),
+    ("RELIANCE", "ONGC",  "Energy - different profiles"),
 ]
 
 
@@ -276,7 +276,7 @@ def screen_cpp(binary: str, data_dir: str,
             # C++ line: "  [PASS] HDFC/ICICI  β=1.5000  ADF=-4.12  p=0.0012  H=0.42  HL=15d"
             # .split() → ["[PASS]", "HDFC/ICICI", "β=...", "ADF=...", "p=...", "H=...", "HL=...']
             # (previously indexed one-off from parts[2..7], which always
-            # silently produced zero results — nothing ever surfaced this
+            # silently produced zero results - nothing ever surfaced this
             # because the failure was swallowed with a bare `continue`.)
             parts  = line.split()
             pair   = parts[1]                          # e.g. HDFC/ICICI
@@ -300,7 +300,7 @@ def screen_cpp(binary: str, data_dir: str,
 
     if parse_failures:
         print(f"[WARN] Failed to parse {parse_failures}/{pass_lines} [PASS] line(s) "
-              f"from the C++ binary's output — its log format may have changed. "
+              f"from the C++ binary's output - its log format may have changed. "
               f"Results below may be incomplete.")
 
     results.sort(key=lambda x: x.score)
@@ -359,7 +359,7 @@ def main():
     args = parser.parse_args()
 
     print("╔══════════════════════════════════════════════════╗")
-    print("║     StatArb — NIFTY Pair Scanner                 ║")
+    print("║     StatArb - NIFTY Pair Scanner                 ║")
     print("╚══════════════════════════════════════════════════╝\n")
     print(f"Universe : {len(args.tickers)} tickers")
     print(f"Pairs    : {len(args.tickers)*(len(args.tickers)-1)//2}")

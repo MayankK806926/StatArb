@@ -16,8 +16,8 @@ scipy>=1.11.0             # optimize.minimize for MLE, stats.linregress
 # ── Visualisation ─────────────────────────────────────────────────────────────
 matplotlib>=3.7.0         # 4-panel dashboard in visualise.py
 
-# ── HMM (optional — regime_hmm.py has pure-Python fallback) ──────────────────
+# ── HMM (optional - regime_hmm.py has pure-Python fallback) ──────────────────
 # hmmlearn>=0.3.0         # faster HMM; uncomment if available
 
 # ── Data handling ─────────────────────────────────────────────────────────────
-pandas>=2.0.0             # optional — used only if you extend the pipeline
+pandas>=2.0.0             # optional - used only if you extend the pipeline

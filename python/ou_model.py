@@ -1,5 +1,5 @@
 """
-ou_model.py — Ornstein-Uhlenbeck Model
+ou_model.py - Ornstein-Uhlenbeck Model
 ========================================
 Fits θ (mean-reversion speed), μ (long-run mean), σ to a spread series.
 Derives half-life = ln(2)/θ and equilibrium std = σ/sqrt(2θ).
@@ -64,7 +64,7 @@ class OUModel:
         a = intercept
 
         if b >= 0:
-            # Not mean-reverting — return degenerate params
+            # Not mean-reverting - return degenerate params
             return OUParams(theta=0.0, mu=np.mean(spread), sigma=np.std(spread),
                             half_life=999.0, sigma_eq=np.std(spread),
                             r_squared=r_val**2, method='ols')
@@ -149,9 +149,9 @@ class OUModel:
         The half-life estimator regresses ΔX on X[t-1], so resampling
         needs to preserve the series' AR(1) dynamics. Two earlier
         approaches were tried and rejected here:
-          1. Resampling raw spread VALUES, sorted — destroys the AR(1)
+          1. Resampling raw spread VALUES, sorted - destroys the AR(1)
              structure entirely (every draw becomes monotonic).
-          2. Resampling raw spread values as circular BLOCKS — better,
+          2. Resampling raw spread values as circular BLOCKS - better,
              but stitching unrelated blocks together creates artificial
              jumps at block boundaries that read as extra mean-reversion,
              which systematically biased every bootstrap draw's half-life

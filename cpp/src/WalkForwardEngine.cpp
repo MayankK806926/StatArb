@@ -33,7 +33,7 @@ std::vector<Trade> WalkForwardEngine::runTestWindow(
     double entrySpread  = 0.0;
     double entryZ       = 0.0;
     double entryBeta    = 0.0;
-    double entryPriceA  = 0.0;     // price of A at entry — P&L must use THIS, not the exit-time price
+    double entryPriceA  = 0.0;     // price of A at entry - P&L must use THIS, not the exit-time price
     double positionSize = 0.0;
     TradeDirection dir  = TradeDirection::FLAT;
 
@@ -89,7 +89,7 @@ std::vector<Trade> WalkForwardEngine::runTestWindow(
 
                 // Gross P&L: for long spread (long A, short B×β)
                 // P&L ≈ (exitSpread - entrySpread) × shares
-                // Shares must be computed from the ENTRY price — the
+                // Shares must be computed from the ENTRY price - the
                 // number of shares bought at entry does not change just
                 // because A's price has since moved.
                 double spreadMove = spread - entrySpread;
