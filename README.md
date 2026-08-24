@@ -469,6 +469,11 @@ filter - so trade counts are low. Generate more synthetic bars
 (`--mode generate --generate 2000`) or feed real downloaded price history for a
 denser sample.
 
+> **These are demo numbers, not a performance claim.** The run below uses 600 bars of
+> *synthetic* prices and produces 2 trades. A Sharpe of 59 and a 100% win rate are what a
+> 2-trade sample yields, not evidence of an edge. The overfitting check below the tearsheet
+> is the number worth reading: IS 17.2 -> OOS 11.8, a 31% decay with 4 of 5 windows degraded.
+
 ```
 Win Pair          Trades  OOS P&L     OOS Sharpe  IS Sharpe  MaxDD   WinRate
 ──────────────────────────────────────────────────────────────────────────────
